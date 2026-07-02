@@ -67,6 +67,9 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'libraries': {
+                'fallback_tags': 'global_tags.fallback_tags',
+            },
         },
     },
 ]
@@ -133,3 +136,31 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+STATIC_CDN_RESOURCES = {
+    'bootstrap_css': {
+        'url': 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css',
+        'integrity': 'sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH',
+        'local': '/static/libs/css/bootstrap.min.css',
+    },
+    'bootstrap_js': {
+        'url': 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js',
+        'integrity': 'sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz',
+        'local': '/static/libs/js/bootstrap.bundle.min.js',
+    },
+    'htmx_js': {
+        'url': 'https://cdn.jsdelivr.net/npm/htmx.org@2.0.10/dist/htmx.min.js',
+        'integrity': 'sha384-H5SrcfygHmAuTDZphMHqBJLc3FhssKjG7w/CeCpFReSfwBWDTKpkzPP8c+cLsK+V',
+        'local': '/static/libs/js/htmx.min.js',
+    },
+    'alpine_js': {
+        'url': 'https://cdn.jsdelivr.net/npm/alpinejs@3.15.11/dist/cdn.min.js',
+        'integrity': 'sha384-WPtu0YHhJ3arcykfnv1JgUffWDSKRnqnDeTpJUbOc2os2moEmLkIdaeR0trPN4be',
+        'local': '/static/libs/js/alpine.min.js',
+    },
+    'force_graph_js': {
+        'url': 'https://cdn.jsdelivr.net/npm/force-graph@1.51.4/dist/force-graph.min.js',
+        'integrity': 'sha384-Hm6GpQcTNI5VqGgGS7lLxTGtEFcxu/kOVV0B7ozIZRu9blWVvigv5httJQZ2qZmY',
+        'local': '/static/libs/js/force-graph.min.js',
+    },
+}
