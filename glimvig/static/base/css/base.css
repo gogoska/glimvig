@@ -1,0 +1,117 @@
+:root {
+    --bg-main: #fcf8f3;           /* почти белый с капелькой теплоты */
+    --bg-navbar: #f8f2eb;         /* светлейший беж */
+    --bg-footer: #f2ebe4;         /* чуть теплее для футера */
+    --bg-card: #ffffff;           /* чистый белый */
+    --text-primary: #4a3a2e;      /* тёмный, но мягкий */
+    --text-muted: #8a7a6a;        /* светлый серо-бежевый */
+    --accent: #d48a5e;            /* терракот (оставляем для акцентов) */
+    --accent-hover: #c0734a;
+    --border-light: #ece4da;      /* очень светлая граница */
+    --shadow: rgba(60, 40, 20, 0.03);
+}
+
+html, body {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    min-height: 100vh;
+}
+
+.navbar.bg-light {
+    background-color: var(--bg-navbar) !important;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.navbar-brand {
+    color: var(--text-primary) !important;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.navbar-nav .nav-link {
+    color: var(--text-primary) !important;
+    transition: color 0.2s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    color: var(--accent) !important;
+}
+
+footer.bg-light {
+    background-color: var(--bg-footer) !important;
+    border-top: 1px solid var(--border-light);
+    color: var(--text-muted) !important;
+}
+
+footer a {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+footer a:hover {
+    color: var(--accent-hover);
+    text-decoration: underline;
+}
+
+.btn-outline-primary {
+    color: var(--accent);
+    border-color: var(--accent);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+}
+
+.btn-primary {
+    background-color: var(--accent);
+    border-color: var(--accent);
+}
+
+.btn-primary:hover {
+    background-color: var(--accent-hover);
+    border-color: var(--accent-hover);
+}
+
+.card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px var(--shadow);
+}
+
+.card-title a {
+    color: var(--text-primary);
+    text-decoration: none;
+}
+
+.card-title a:hover {
+    color: var(--accent);
+}
+
+a {
+    color: var(--accent);
+    transition: color 0.2s ease;
+}
+
+a:hover {
+    color: var(--accent-hover);
+}
+
+.text-muted {
+    color: var(--text-muted) !important;
+}
+
+.sidebar-block {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    padding: 1rem;
+}
+
+.sidebar-block h6 {
+    color: var(--text-primary);
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+}

@@ -1,0 +1,70 @@
+{% load static %}
+{% load fallback_tags %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Glimvig{% endblock %}</title>
+
+    {% static_fallback 'bootstrap_css' %}
+
+    <link rel="stylesheet" href="{% static 'base/css/base.css' %}">
+
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <header>
+        {% block header %}
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="">Glimvig</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav me-auto">
+                            <li class="nav-item"><a class="nav-link" href="">Главная</a></li>
+                            <li class="nav-item"><a class="nav-link" href="">Поиск</a></li>
+                            <li class="nav-item"><a class="nav-link" href="">О проекте</a></li>
+                        </ul>
+                        <ul class="navbar-nav">
+                            <!-- {% if user.is_authenticated %} -->
+                                <!-- <li class="nav-item"><a class="nav-link" href="">Профиль</a></li>
+                                <li class="nav-item"><a class="nav-link" href="">Выйти</a></li> -->
+                            <!-- {% else %} -->
+                                <li class="nav-item"><a class="nav-link" href="">Войти</a></li>
+                                <li class="nav-item"><a class="nav-link" href="">Регистрация</a></li>
+                            <!-- {% endif %} -->
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        {% endblock %}
+    </header>
+
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+
+    <footer class="bg-light text-center text-muted py-3 mt-4">
+        {% block footer %}
+            <div class="container">
+                <small>© 2026 Glimvig</small>
+            </div>
+        {% endblock %}
+    </footer>
+
+    {% static_fallback 'bootstrap_js' %}
+    {% static_fallback 'htmx_js' %}
+    {% static_fallback 'alpine_js' %}
+
+    <script src="{% static 'base/js/main.js' %}"></script>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,47 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'users/css/profile.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid my-4">
+    <div class="row">
+
+        {# Левая колонка — аватар, статистика, кнопка графа #}
+        <aside class="col-lg-3 col-md-4">
+            {% block profile_sidebar %}
+                <div class="text-center mb-4">
+                    <img src="https://via.placeholder.com/150" alt="Аватар" class="rounded-circle img-fluid" style="max-width: 150px;">
+                    <h4 class="mt-2">{{ profile.username|default:"Пользователь" }}</h4>
+                    <p class="text-muted">на сайте с {{ profile.joined|default:"недавно" }}</p>
+                </div>
+
+                <div class="sidebar-block mb-3">
+                    <h6>Статистика</h6>
+                    <ul class="list-unstyled small">
+                        <li>📝 Поэм: {{ profile.poems_count|default:0 }}</li>
+                        <li>💬 Отзывов: {{ profile.comments_count|default:0 }}</li>
+                        <li>⭐ Рейтинг: {{ profile.rating|default:"0.0" }}</li>
+                    </ul>
+                </div>
+
+                <div class="d-grid gap-2">
+                    <a href="{% url 'profile_graph' username=profile.username|default:'user' %}" class="btn btn-outline-primary">
+                        🌐 Перейти к графу
+                    </a>
+                </div>
+            {% endblock %}
+        </aside>
+
+        {# Правая колонка — основной контент #}
+        <section class="col-lg-9 col-md-8">
+            {% block profile_content %}
+                {# Сюда будет вставляться список поэм, избранное, настройки #}
+            {% endblock %}
+        </section>
+
+    </div>
+</div>
+{% endblock %}

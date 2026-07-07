@@ -1,0 +1,40 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container-fluid my-4">
+    <div class="row">
+
+        <aside class="col-lg-2 d-none d-lg-block">
+            {% block left_sidebar %}
+                <div class="sidebar-block">
+                    <h6>Реклама</h6>
+                    <p class="text-muted small">Здесь может быть ваш баннер</p>
+                    <div class="bg-light p-3 rounded text-center" style="height: 200px;">
+                        <span class="text-muted">Баннер</span>
+                    </div>
+                </div>
+            {% endblock %}
+        </aside>
+
+        <section class="col-lg-8 col-md-12">
+            {% block main_content %}
+            {% endblock %}
+        </section>
+
+        <aside class="col-lg-2 d-none d-lg-block">
+            {% block right_sidebar %}
+                <div class="sidebar-block">
+                    <h6>Навигация</h6>
+                    <div class="d-grid gap-2">
+                        <a href="#" class="btn btn-outline-primary">Профиль</a>
+                        <a href="#" class="btn btn-outline-secondary">Избранное</a>
+                        <a href="#" class="btn btn-success">Создать поэму</a>
+                    </div>
+                </div>
+            {% endblock %}
+        </aside>
+
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends 'poems/base_content.html' %}
+{% load static %}
+
+{% block title %}Создать поэму — Glimvig{% endblock %}
+
+{% block main_content %}
+    <h1 class="mb-4">Создать поэму</h1>
+
+    <form>
+        {# Заголовок #}
+        <div class="mb-3">
+            <label for="title" class="form-label">Заголовок</label>
+            <input type="text" class="form-control" id="title" placeholder="Введите заголовок">
+        </div>
+
+        {# Отрывок (teaser) #}
+        <div class="mb-3">
+            <label for="teaser" class="form-label">Отрывок (завлекалочка)</label>
+            <input type="text" class="form-control" id="teaser" placeholder="Короткая цитата или интригующая строка">
+        </div>
+
+        {# Полный текст #}
+        <div class="mb-3">
+            <label for="content" class="form-label">Текст поэмы</label>
+            <textarea class="form-control" id="content" rows="10" placeholder="Введите текст..."></textarea>
+        </div>
+
+        {# Теги #}
+        <div class="mb-3">
+            <label for="tags" class="form-label">Теги</label>
+            <input type="text" class="form-control" id="tags" placeholder="например: философия, любовь, природа">
+        </div>
+
+        {# Категория #}
+        <div class="mb-3">
+            <label for="category" class="form-label">Категория</label>
+            <select class="form-select" id="category">
+                <option selected>Выберите категорию</option>
+                <option value="1">Философия</option>
+                <option value="2">Любовь</option>
+                <option value="3">Фантастика</option>
+                <option value="4">Природа</option>
+            </select>
+        </div>
+
+        {# Связи с другими поэмами #}
+        <div class="mb-3">
+            <label for="connections" class="form-label">Связи с другими поэмами</label>
+            <select class="form-select" id="connections" multiple>
+                <option value="1">Осенний ветер</option>
+                <option value="2">Ночной разговор</option>
+                <option value="3">Тени прошлого</option>
+            </select>
+            <div class="form-text">Удерживайте Ctrl (Cmd) для выбора нескольких.</div>
+        </div>
+
+        {# Кнопки #}
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-primary">Опубликовать</button>
+            <a href="{% url 'home' %}" class="btn btn-outline-secondary">Отмена</a>
+        </div>
+    </form>
+{% endblock %}

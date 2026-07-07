@@ -1,0 +1,42 @@
+{% extends 'poems/base_content.html' %}
+{% load static %}
+
+{% block title %}Поиск — Glimvig{% endblock %}
+
+{% block main_content %}
+    <h1 class="mb-4">Поиск</h1>
+
+    {# Форма поиска #}
+    <form class="mb-4" action="#" method="get">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Поиск поэм, авторов, тегов..." name="q" value="{{ query|default:'' }}">
+            <button class="btn btn-primary" type="submit">Найти</button>
+        </div>
+        <div class="mt-2">
+            <label class="me-2"><input type="checkbox" name="by_rating"> По рейтингу</label>
+            <label class="me-2"><input type="checkbox" name="by_date"> По дате</label>
+        </div>
+    </form>
+
+    {# Результаты поиска (заглушка) #}
+    {% if results %}
+        <p class="text-muted">Найдено: {{ results|length }}</p>
+        <div class="list-group">
+            {% for poem in results %}
+                <a href="{% url 'poem_detail' poem.id|default:'#' %}" class="list-group-item list-group-item-action">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="mb-1">{{ poem.title|default:"Без названия" }}</h6>
+                            <p class="mb-1 text-muted small">{{ poem.teaser|default:"" }}</p>
+                        </div>
+                        <span class="badge bg-secondary rounded-pill">⭐ {{ poem.rating|default:"0.0" }}</span>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    {% elif query %}
+        <p class="text-muted">Ничего не найдено по запросу «{{ query }}».</p>
+    {% else %}
+        <p class="text-muted">Введите запрос для поиска.</p>
+    {% endif %}
+{% endblock %}

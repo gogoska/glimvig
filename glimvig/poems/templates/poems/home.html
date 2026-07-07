@@ -1,0 +1,70 @@
+{% extends 'poems/base_content.html' %}
+{% load static %}
+
+{% block title %}Главная — Glimvig{% endblock %}
+
+{% block main_content %}
+    <h1 class="mb-4">Лента поэм</h1>
+
+    {# Лента карточек #}
+    <div id="feed">
+        {% for poem in poems %}
+            <div class="card mb-4" id="poem-{{ forloop.counter }}">
+                <div class="card-body">
+
+                    {# Заголовок + кнопка избранного #}
+                    <div class="d-flex justify-content-between align-items-start">
+                        <h5 class="card-title">
+                            <a href="/poem/{{ forloop.counter }}/">{{ poem.title }}</a>
+                        </h5>
+                        <button class="btn btn-outline-secondary btn-sm"
+                                hx-post="#"
+                                hx-target="#poem-{{ forloop.counter }}"
+                                hx-swap="outerHTML">
+                            {% if poem.is_favorite %}★{% else %}☆{% endif %}
+                        </button>
+                    </div>
+
+                    {# Отрывок (teaser) #}
+                    <p class="text-muted small fst-italic">{{ poem.teaser }}</p>
+
+                    {# Мета: рейтинг, отзывы #}
+                    <div class="d-flex justify-content-between align-items-center mt-2">
+                        <div>
+                            <span class="badge bg-warning text-dark">⭐ {{ poem.rating }}</span>
+                            <span class="text-muted ms-2">({{ poem.votes_count }} оценок)</span>
+                        </div>
+                        <div>
+                            <span class="text-muted">💬 {{ poem.comments_count }}</span>
+                            <button class="btn btn-link btn-sm p-0 ms-2"
+                                    hx-get="#"
+                                    hx-target="#comments-{{ forloop.counter }}"
+                                    hx-swap="innerHTML">
+                                отзывы
+                            </button>
+                            <div id="comments-{{ forloop.counter }}" class="mt-2"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        {% empty %}
+            <p class="text-muted">Пока нет поэм. Будьте первым!</p>
+        {% endfor %}
+    </div>
+
+    {# Кнопка загрузки следующей страницы (заглушка) #}
+    <div class="text-center mt-3">
+        <button class="btn btn-outline-primary"
+                hx-get="#"
+                hx-target="#feed"
+                hx-swap="beforeend"
+                hx-trigger="click"
+                hx-indicator="#loading">
+            Загрузить ещё
+        </button>
+        <div id="loading" class="text-center text-muted small mt-2" style="display:none;">
+            ⏳ Загрузка...
+        </div>
+    </div>
+{% endblock %}

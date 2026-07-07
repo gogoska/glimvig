@@ -1,0 +1,53 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Граф связей — Glimvig{% endblock %}
+
+{# Убираем отступы и сайдбары, делаем на всю страницу #}
+{% block content %}
+    <div id="graph-container" style="width: 100vw; height: 100vh; position: fixed; top: 0; left: 0; z-index: 1000; background: #fff9f0;">
+        <div id="graph" style="width: 100%; height: 100%;"></div>
+
+        {# Кнопка возврата в профиль #}
+        <div style="position: absolute; top: 20px; left: 20px; z-index: 1100; background: white; padding: 8px 16px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+            <a href="{% url 'profile' username=profile.username|default:'user' %}" class="text-decoration-none">← Назад в профиль</a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+    {# Подключаем Force‑Graph через fallback #}
+    {% static_fallback 'force_graph_js' %}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Данные графа (заглушка)
+            const data = {
+                nodes: [
+                    { id: 'p1', name: 'Осенний ветер', group: 1 },
+                    { id: 'p2', name: 'Ночной разговор', group: 1 },
+                    { id: 'p3', name: 'Тени прошлого', group: 2 },
+                    { id: 'p4', name: 'Рассвет', group: 2 },
+                    { id: 'p5', name: 'Сны', group: 1 },
+                ],
+                links: [
+                    { source: 'p1', target: 'p2', type: 'продолжение' },
+                    { source: 'p1', target: 'p3', type: 'вдохновение' },
+                    { source: 'p2', target: 'p4', type: 'общий персонаж' },
+                    { source: 'p3', target: 'p5', type: 'идея' },
+                ]
+            };
+
+            const Graph = ForceGraph();
+            Graph(document.getElementById('graph'))
+                .graphData(data)
+                .nodeLabel('name')
+                .nodeColor(node => node.group === 1 ? '#c87a4f' : '#5a7a9a')
+                .linkLabel(link => link.type || 'связь')
+                .linkWidth(2)
+                .onNodeClick(node => {
+                    window.location.href = '/poem/' + node.id + '/';
+                });
+        });
+    </script>
+{% endblock %}
