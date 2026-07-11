@@ -1,5 +1,6 @@
 {% extends 'base/base.html' %}
 {% load static %}
+{% load fallback_tags %}
 
 {% block title %}Граф связей — Glimvig{% endblock %}
 
@@ -10,7 +11,7 @@
 
         {# Кнопка возврата в профиль #}
         <div style="position: absolute; top: 20px; left: 20px; z-index: 1100; background: white; padding: 8px 16px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-            <a href="{% url 'profile' username=profile.username|default:'user' %}" class="text-decoration-none">← Назад в профиль</a>
+            <a href="" class="text-decoration-none">← Назад в профиль</a>
         </div>
     </div>
 {% endblock %}
