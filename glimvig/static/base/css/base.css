@@ -115,3 +115,20 @@ a:hover {
     font-weight: 600;
     margin-bottom: 0.75rem;
 }
+
+/* Кнопка выхода — выглядит как ссылка */
+.logout-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    color: var(--text-primary);
+    font: inherit;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.logout-btn:hover {
+    color: var(--accent);
+    text-decoration: underline;
+}

@@ -1,7 +1,16 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+from django.contrib.auth import get_user_model
 
-def profile(request):
-    return render(request, 'users\profile.html')
+User = get_user_model()
+
+def profile(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+
+    context = {
+        'profile_user': user,
+    }
+
+    return render(request, 'users\profile.html', context)
 
 def favorites(request):
     return render(request, 'users/favorites.html')

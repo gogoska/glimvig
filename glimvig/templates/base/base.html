@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Glimvig{% endblock %}</title>
+    <title>{% block title %}{{ SITE_NAME }}{% endblock %}</title>
 
     {% static_fallback 'bootstrap_css' %}
 
@@ -14,29 +14,34 @@
 
     {% block extra_css %}{% endblock %}
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
     <header>
         {% block header %}
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="">Glimvig</a>
+                    <a class="navbar-brand" href="">{{ SITE_NAME }}</a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav me-auto">
-                            <li class="nav-item"><a class="nav-link" href="">Главная</a></li>
-                            <li class="nav-item"><a class="nav-link" href="">Поиск</a></li>
-                            <li class="nav-item"><a class="nav-link" href="">О проекте</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'poems:home' %}">Главная</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'poems:search' %}">Поиск</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'poems:about' %}">О проекте</a></li>
                         </ul>
                         <ul class="navbar-nav">
-                            <!-- {% if user.is_authenticated %} -->
-                                <!-- <li class="nav-item"><a class="nav-link" href="">Профиль</a></li>
-                                <li class="nav-item"><a class="nav-link" href="">Выйти</a></li> -->
-                            <!-- {% else %} -->
-                                <li class="nav-item"><a class="nav-link" href="">Войти</a></li>
-                                <li class="nav-item"><a class="nav-link" href="">Регистрация</a></li>
-                            <!-- {% endif %} -->
+                            {% if user.is_authenticated %}
+                                <li class="nav-item"><a class="nav-link" href="{% url 'users:profile' user_id=user.id%}">Профиль</a></li>
+                                <form action="{% url 'users:logout' %}" method="post" class="d-inline">
+                                    {% csrf_token %}
+                                    <button type="submit" class="logout-btn nav-link">
+                                        Выйти
+                                    </button>
+                                </form>
+                            {% else %}
+                                <li class="nav-item"><a class="nav-link" href="{% url 'users:login' %}">Войти</a></li>
+                                <li class="nav-item"><a class="nav-link" href="{% url 'users:register' %}">Регистрация</a></li>
+                            {% endif %}
                         </ul>
                     </div>
                 </div>
@@ -45,16 +50,16 @@
     </header>
 
 
-    <main>
+    <main class="flex-grow-1">
         {% block content %}
         {% endblock %}
     </main>
 
 
-    <footer class="bg-light text-center text-muted py-3 mt-4">
+    <footer class="bg-light text-center text-muted py-3">
         {% block footer %}
             <div class="container">
-                <small>© 2026 Glimvig</small>
+                <small>© {% now "Y" %} {{ SITE_NAME }}</small>
             </div>
         {% endblock %}
     </footer>

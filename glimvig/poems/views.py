@@ -1,6 +1,9 @@
 from django.shortcuts import render
 
 def home(request):
+
+    
+
     return render(request, 'poems/home.html')
 
 def about(request):

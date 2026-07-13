@@ -66,6 +66,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'glimvig.context_processors.site_name',
             ],
             'libraries': {
                 'fallback_tags': 'global_tags.fallback_tags',
@@ -164,3 +165,5 @@ STATIC_CDN_RESOURCES = {
         'local': '/static/libs/js/force-graph.min.js',
     },
 }
+
+SITE_NAME = 'Glimvig'
