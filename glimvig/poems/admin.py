@@ -1,3 +1,7 @@
 from django.contrib import admin
+from .models import Poem
 
-# Register your models here.
+@admin.register(Poem)
+class PoemAdmin(admin.ModelAdmin):
+    prepopulated_fields = {'slug': ('title',)}
+
