@@ -8,25 +8,33 @@
         <div class="col-md-6 col-lg-4">
             <div class="card">
                 <div class="card-body">
+                    
                     <h4 class="card-title text-center mb-4">Вход</h4>
-                    <form>
+                    
+                    {% if form.errors %}
+                        <div class="alert alert-danger">
+                            Неверный логин или пароль. Попробуйте снова.
+                        </div>
+                    {% endif %}
+
+                    <form method="post" action="{% url 'users:login' %}" >
+                        {% csrf_token %}
                         <div class="mb-3">
-                            <label for="login" class="form-label">Логин или email</label>
-                            <input type="text" class="form-control" id="login">
+                            <label for="login" class="form-label">Nickname</label>
+                            <input type="text" class="form-control" id="id_login" name="username" value="{{ from.username.value|default:'' }}">
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">Пароль</label>
-                            <input type="password" class="form-control" id="password">
+                            <input type="password" class="form-control" id="id_password" name="password">
                         </div>
                         <div class="d-grid">
                             <button type="submit" class="btn btn-primary">Войти</button>
                         </div>
                         <div class="mt-3 text-center">
-                            <a href="#">Забыли пароль?</a>
-                            <br>
-                            <a href="">Ещё нет аккаунта? Регистрация</a>
+                            <a href="{% url 'users:django_registration_register' %}">Ещё нет аккаунта? Регистрация</a>
                         </div>
                     </form>
+                
                 </div>
             </div>
         </div>

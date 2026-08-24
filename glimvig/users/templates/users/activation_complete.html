@@ -1,0 +1,20 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block extra_meta %}
+    <meta http-equiv="refresh" content="3; url={% url 'users:login' %}">
+{% endblock %}
+
+{% block title %}Успех активации — Glimvig{% endblock %}
+
+{% block content %}
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-6 col-lg-3">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title text-center mb-4">Активация прошла успешно! Добро пожаловать!</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

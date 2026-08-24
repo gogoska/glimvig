@@ -6,41 +6,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block extra_meta %}{% endblock %}
     <title>{% block title %}{{ SITE_NAME }}{% endblock %}</title>
 
     {% static_fallback 'bootstrap_css' %}
 
     <link rel="stylesheet" href="{% static 'base/css/base.css' %}">
 
+    <style>
+        body {
+            background-image: url("{% static 'base/img/background.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+    </style>
+
     {% block extra_css %}{% endblock %}
 </head>
-<body class="d-flex flex-column min-vh-100">
+<body class="d-flex flex-column min-vh-100" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
     <header>
         {% block header %}
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
                 <div class="container-fluid">
                     <a class="navbar-brand" href="">{{ SITE_NAME }}</a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarNav">
-                        <ul class="navbar-nav me-auto">
+                        <ul class="navbar-nav me-auto align-items-center align-items-lg-start">
                             <li class="nav-item"><a class="nav-link" href="{% url 'poems:home' %}">Главная</a></li>
                             <li class="nav-item"><a class="nav-link" href="{% url 'poems:search' %}">Поиск</a></li>
                             <li class="nav-item"><a class="nav-link" href="{% url 'poems:about' %}">О проекте</a></li>
                         </ul>
-                        <ul class="navbar-nav">
+                        
+                        <hr class="d-lg-none my-2">
+
+                        <ul class="navbar-nav align-items-center align-items-lg-start">
                             {% if user.is_authenticated %}
                                 <li class="nav-item"><a class="nav-link" href="{% url 'users:profile' user_id=user.id%}">Профиль</a></li>
-                                <form action="{% url 'users:logout' %}" method="post" class="d-inline">
-                                    {% csrf_token %}
-                                    <button type="submit" class="logout-btn nav-link">
-                                        Выйти
-                                    </button>
-                                </form>
+                                <li class="nav-item"><a class="nav-link" href="{% url 'users:favorites' %}">Избраные</a></li>
+                                <li class="nav-item"><a class="nav-link" href="{% url 'poems:poem_create' %}">Создать</a></li>
+                                <li class="nav-item">
+                                    <form action="{% url 'users:logout' %}" method="post">
+                                        {% csrf_token %}
+                                        <button type="submit" class="logout-btn nav-link">
+                                            Выйти
+                                        </button>
+                                    </form>
+                                </li>
                             {% else %}
+                                <li class="nav-item"><a class="nav-link" href="{% url 'users:django_registration_register' %}">Регистрация</a></li>
                                 <li class="nav-item"><a class="nav-link" href="{% url 'users:login' %}">Войти</a></li>
-                                <li class="nav-item"><a class="nav-link" href="{% url 'users:register' %}">Регистрация</a></li>
                             {% endif %}
                         </ul>
                     </div>
@@ -50,7 +68,7 @@
     </header>
 
 
-    <main class="flex-grow-1">
+    <main class="flex-grow-1 d-flex flex-column">
         {% block content %}
         {% endblock %}
     </main>
@@ -68,7 +86,7 @@
     {% static_fallback 'htmx_js' %}
     {% static_fallback 'alpine_js' %}
 
-    <script src="{% static 'base/js/main.js' %}"></script>
+    <script src="{% static 'base/js/base.js' %}"></script>
 
     {% block extra_js %}{% endblock %}
 </body>

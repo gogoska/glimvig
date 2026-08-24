@@ -41,12 +41,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'poems',
-    'users'
+    'users',
+    'django_registration',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -119,7 +121,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru'
 
 TIME_ZONE = 'UTC'
 
@@ -167,3 +169,17 @@ STATIC_CDN_RESOURCES = {
 }
 
 SITE_NAME = 'Glimvig'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.getenv('TEST_MAIL_ADDRESS')
+EMAIL_HOST_PASSWORD = os.getenv('TEST_MAIL_PASSWORD')
+
+ACCOUNT_ACTIVATION_DAYS = 1
+
+LOGIN_URL = 'users:login'
+LOGIN_REDIRECT_URL = 'poems:home'
+
+REGISTRATION_OPEN = True

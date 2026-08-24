@@ -1,0 +1,38 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Активация аккаунта — Glimvig{% endblock %}
+
+{% block content %}
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-6 col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title text-center mb-4">Активация аккаунта.</h4>
+
+                    {% if form.errors %}
+                        <div class="alert alert-danger">{{ form.errors.activation_key.0 }}</div>
+                    {% else %}
+                        <p class="text-center text-muted">
+                            Нажмите кнопку ниже для завершения активации аккаунта.
+                        </p>
+                    {% endif %}
+
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <input type="hidden" name="activation_key" value="{{ form.activation_key.value|default:'' }}">
+                        
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">
+                                Активировать
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
