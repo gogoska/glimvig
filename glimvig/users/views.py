@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import get_user_model
 from django.shortcuts import redirect
 from django.db.models import Avg 
-from poems.models import Rating
+from poems.models import Rating, Poem
 
 
 User = get_user_model()
@@ -35,13 +35,16 @@ def profile(request, user_id):
     return render(request, 'users/profile.html', context)
 
 def favorites(request):
-    return render(request, 'users/favorites.html')
+    if not request.user.is_authenticated:
+        return redirect('users:login')
 
-def login(request):
-    return render(request, 'users/login.html')
+    favorite_poems = Poem.objects.filter(favorite_poems__user=request.user).all()
 
-def register(request):
-    return render(request, 'users/register.html')
+    context = {
+        'favorite_poems': favorite_poems,
+    }
 
-def settings(request):
-    return render(request, 'users/settings.html')
+    return render(request, 'users/favorites.html', context)
+
+# def settings(request):
+#     return render(request, 'users/settings.html')
