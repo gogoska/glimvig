@@ -21,16 +21,16 @@ class Category(models.Model):
 
 
 class Poem(models.Model):
-    title = models.CharField(max_length=200)
-    text = models.TextField()
-    teaser = models.CharField(max_length=500, blank=True, default='')
-    authors = models.ManyToManyField(User, related_name='poems')
-    average_rating = models.DecimalField(max_digits=4, decimal_places=2, default=0)
-    slug = models.SlugField(unique=True)
-    created_at = models.DateTimeField(auto_now_add=True, editable=False)
-    updated_at = models.DateTimeField(auto_now=True, editable=False)
-    is_published = models.BooleanField(default=False)
-    categories = models.ManyToManyField(Category, related_name='poems')
+    title = models.CharField(max_length=200, verbose_name='Заговок')
+    text = models.TextField(verbose_name='Текст')
+    teaser = models.CharField(max_length=500, blank=True, default='', verbose_name='Тизер')
+    authors = models.ManyToManyField(User, related_name='poems', verbose_name='Авторы')
+    average_rating = models.DecimalField(max_digits=4, decimal_places=2, default=0, verbose_name='Рейтинг')
+    slug = models.SlugField(unique=True, verbose_name='Слаг')
+    created_at = models.DateTimeField(auto_now_add=True, editable=False, verbose_name='Время создания')
+    updated_at = models.DateTimeField(auto_now=True, editable=False, verbose_name='Время редактирования')
+    is_published = models.BooleanField(default=False, verbose_name='Публикация')
+    categories = models.ManyToManyField(Category, related_name='poems', verbose_name='Категории')
 
     def save(self, *args, **kwargs):
         if not self.slug:
