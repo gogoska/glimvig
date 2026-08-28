@@ -29,7 +29,7 @@
                     <p>{{ poem.teaser }}</p>
 
                     <div class="d-flex align-items-center mt-2 gap-2">
-                        <span class="text-dark py-2 fs-6 fw-bold">⭐ {{ poem.average_rating }} / 10</span>
+                        <span class="text-dark py-2 fs-6 fw-bold"> ⭐ {% if poem.average_rating != 0 %} {{ poem.average_rating }} / 10 {% else %} - {% endif %}</span>
                         <span class="text-muted ms-2">(Оценок: {{ poem.votes_count|default:0 }})</span>
                         <!-- <div class="comment-trigger"
                             hx-get=""

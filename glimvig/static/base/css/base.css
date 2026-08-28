@@ -206,3 +206,9 @@ a:hover {
 .poem-text {
     text-indent: 1.5em;
 }
+
+.profile-photo {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+}

@@ -10,7 +10,7 @@ app_name = 'users'
 
 urlpatterns = [
     path(
-        '<int:user_id>', 
+        'profile/<int:user_id>', 
         views.profile, 
         name='profile'
     ),
@@ -19,11 +19,11 @@ urlpatterns = [
         views.favorites,
         name='favorites'
     ),
-    path(
-        'settings',
-        views.settings,
-        name='settings'
-    ),
+    # path(
+    #     'settings',
+    #     views.settings,
+    #     name='settings'
+    # ),
     path(
         'login',
         auth_views.LoginView.as_view(
