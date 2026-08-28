@@ -1,60 +1,53 @@
 {% extends 'poems/base_content.html' %}
 {% load static %}
 
-{% block title %}Главная — Glimvig{% endblock %}
+{% block title %}Главная — {{ SITE_NAME }}{% endblock %}
 
 {% block main_content %}
     <h1 class="mb-4">Лента поэм</h1>
 
-    {# Лента карточек #}
     <div id="feed">
         {% for poem in poems %}
             <div class="card mb-4" id="poem-{{ forloop.counter }}">
                 <div class="card-body">
 
-                    {# Заголовок + кнопка избранного #}
                     <div class="d-flex justify-content-between align-items-start">
-                        <h5 class="card-title">
-                            <a href="/poem/{{ forloop.counter }}/">{{ poem.title }}</a>
-                        </h5>
-                        <button class="btn btn-outline-secondary btn-sm"
-                                hx-post="#"
-                                hx-target="#poem-{{ forloop.counter }}"
-                                hx-swap="outerHTML">
-                            {% if poem.is_favorite %}★{% else %}☆{% endif %}
-                        </button>
+                        <h4 class="card-title">
+                            <a href="{% url 'poems:poem_detail' poem_slug=poem.slug %}">{{ poem.title }}</a>
+                        </h4>
+                        <h6 class="card-title flex-grow-1 text-end me-2 align-self-center">
+                            Автор{{ poem.authors.all|pluralize:"ы" }}:
+                            {% for author in poem.authors.all %}
+                            <a href="{% url 'users:profile' user_id=author.pk %}"> {{ author.username }}</a>{% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                        </h6>
+
+                        {% include 'poems/_toggle_favorite_button.html' with is_favorite=poem.is_favorite poem_slug=poem.slug %}
+
                     </div>
 
-                    {# Отрывок (teaser) #}
-                    <p class="text-muted small fst-italic">{{ poem.teaser }}</p>
+                    <p>{{ poem.teaser }}</p>
 
-                    {# Мета: рейтинг, отзывы #}
-                    <div class="d-flex justify-content-between align-items-center mt-2">
-                        <div>
-                            <span class="badge bg-warning text-dark">⭐ {{ poem.rating }}</span>
-                            <span class="text-muted ms-2">({{ poem.votes_count }} оценок)</span>
-                        </div>
-                        <div>
-                            <span class="text-muted">💬 {{ poem.comments_count }}</span>
-                            <button class="btn btn-link btn-sm p-0 ms-2"
-                                    hx-get="#"
-                                    hx-target="#comments-{{ forloop.counter }}"
-                                    hx-swap="innerHTML">
-                                отзывы
-                            </button>
-                            <div id="comments-{{ forloop.counter }}" class="mt-2"></div>
-                        </div>
+                    <div class="d-flex align-items-center mt-2 gap-2">
+                        <span class="text-dark py-2 fs-6 fw-bold">⭐ {{ poem.average_rating }} / 10</span>
+                        <span class="text-muted ms-2">(Оценок: {{ poem.votes_count|default:0 }})</span>
+                        <!-- <div class="comment-trigger"
+                            hx-get=""
+                            hx-target="#comments-{{ forloop.counter }}"
+                            hx-swap="outerHTML"
+                            hx-vals='{ "action": "comments", "poem_id": {{ poem.id }} }'></div>
+                        <span class="text-muted ms-1">Отзывы:</span>
+                        <span class="text-muted">{{ poem.comments_count }} 💬</span>
+                        <div id="comments-{{ forloop.counter }}" class="d-none mt-2"></div> {# ПОМНИ ТУТ СКРЫТО #} -->
                     </div>
-
-                </div>
+                </div>    
             </div>
         {% empty %}
-            <p class="text-muted">Пока нет поэм. Будьте первым!</p>
+            <p class="text-muted">Поэм нет</p>
         {% endfor %}
     </div>
 
-    {# Кнопка загрузки следующей страницы (заглушка) #}
-    <div class="text-center mt-3">
+    <!-- <div class="text-center mt-3">
         <button class="btn btn-outline-primary"
                 hx-get="#"
                 hx-target="#feed"
@@ -66,5 +59,5 @@
         <div id="loading" class="text-center text-muted small mt-2" style="display:none;">
             ⏳ Загрузка...
         </div>
-    </div>
+    </div> -->
 {% endblock %}

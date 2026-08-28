@@ -1,0 +1,6 @@
+<button class=" btn {% if is_favorite %}btn-light{% else %}btn-outline-secondary{% endif %} btn-sm align-self-center"
+        hx-post="{% url 'poems:poem_favorite' poem_slug=poem_slug %}" 
+        hx-target="this"
+        hx-swap="outerHTML">
+    {% if is_favorite %}В избранном ★{% else %}☆{% endif %}
+</button>

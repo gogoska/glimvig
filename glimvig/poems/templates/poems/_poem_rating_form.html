@@ -1,0 +1,40 @@
+<div class="rating-block mb-3" id="rating-block">
+    <div class="mb-2">
+        <span class="fw-bold">⭐ Ваша оценка:
+            {% if poem_user_rating %}
+                {{ poem_user_rating }}
+            {% else %}
+                ___
+            {% endif %}
+        </span>
+    </div>
+
+    <form action="">
+
+    </form>
+
+    <form hx-post="{% url 'poems:poem_rating' poem_slug=poem_slug %}"
+        hx-target="#rating-block"
+        hx-swap="outerHTML">
+        {% csrf_token %}
+        <div class="d-flex align-items-center gap-2 mt-1">
+            <select name="value" id="rating-value" class="form-select form-select-sm w-auto">
+                {% for i in "1234567890"|make_list %}
+                    <option 
+                        value="{{ forloop.counter }}" 
+                        {% if poem_rating_form.value.value == forloop.counter %}selected{% endif %}>
+                        {{ forloop.counter }}
+                    </option>
+                {% endfor %}
+            </select>
+            <button type="submit" class="btn btn-primary btn-sm">Оценить</button>
+        </div>
+    </form>
+
+
+    {% if poem_rating_form.errors %}
+        <div class="alert alert-danger alert-sm mt-2">
+            {{ poem_rating_form.value.errors }}
+        </div>
+    {% endif %}
+</div>

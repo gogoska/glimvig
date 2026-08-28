@@ -2,39 +2,34 @@
 {% load static %}
 
 {% block content %}
-<div class="container-fluid my-4">
-    <div class="row">
 
-        <aside class="col-lg-2 d-none d-lg-block">
-            {% block left_sidebar %}
-                <div class="sidebar-block">
-                    <h6>Реклама</h6>
-                    <p class="text-muted small">Здесь может быть ваш баннер</p>
-                    <div class="bg-light p-3 rounded text-center" style="height: 200px;">
-                        <span class="text-muted">Баннер</span>
-                    </div>
+<div class="container-fluid my-4 flex-grow-1 d-flex flex-column">
+    <div class="row row-el flex-grow-1">
+
+        <aside class="el-aside col-lg-2 d-none d-lg-flex justify-content-center align-items-center">
+            <div class="sidebar-block d-flex align-items-center justify-content-center">
+                <div class="banner-placeholder d-flex align-items-center justify-content-center">
+                    <img class="ads_banner" src="{% static 'base/img/ads_banner.jpg' %}" alt="Реклама">
                 </div>
-            {% endblock %}
+            </div>
         </aside>
 
-        <section class="col-lg-8 col-md-12">
-            {% block main_content %}
-            {% endblock %}
+        <section class="col-lg-8 col-md-12 d-flex flex-column">
+            <div class="main-content flex-grow-1">
+                {% block main_content %}
+                {% endblock %}
+            </div>
         </section>
 
-        <aside class="col-lg-2 d-none d-lg-block">
-            {% block right_sidebar %}
-                <div class="sidebar-block">
-                    <h6>Навигация</h6>
-                    <div class="d-grid gap-2">
-                        <a href="#" class="btn btn-outline-primary">Профиль</a>
-                        <a href="#" class="btn btn-outline-secondary">Избранное</a>
-                        <a href="#" class="btn btn-success">Создать поэму</a>
-                    </div>
-                </div>
-            {% endblock %}
-        </aside>
 
+        <aside class="el-aside col-lg-2 d-none d-lg-flex justify-content-center align-items-center">
+            <div class="sidebar-block d-flex align-items-center justify-content-center">
+                <div class="banner-placeholder d-flex align-items-center justify-content-center">
+                    <img class="ads_banner" src="{% static 'base/img/ads_banner.jpg' %}" alt="Реклама">
+                </div>
+            </div>
+        </aside>
+        
     </div>
 </div>
 {% endblock %}

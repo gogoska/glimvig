@@ -1,20 +1,26 @@
 :root {
-    --bg-main: #fcf8f3;           /* почти белый с капелькой теплоты */
-    --bg-navbar: #f8f2eb;         /* светлейший беж */
-    --bg-footer: #f2ebe4;         /* чуть теплее для футера */
-    --bg-card: #ffffff;           /* чистый белый */
-    --text-primary: #4a3a2e;      /* тёмный, но мягкий */
-    --text-muted: #8a7a6a;        /* светлый серо-бежевый */
-    --accent: #d48a5e;            /* терракот (оставляем для акцентов) */
-    --accent-hover: #c0734a;
-    --border-light: #ece4da;      /* очень светлая граница */
-    --shadow: rgba(60, 40, 20, 0.03);
+    --bg-main: #f8f0e8;           /* почти белый с едва уловимой теплотой */
+    --bg-navbar: #faf6f0;         /* очень светлый беж */
+    --bg-footer: #f5f0ea;         /* светлый, чуть теплее */
+    --bg-card: #ebe4dc;           /* чистый белый */
+    --text-primary: #4a3a2e;      
+    --text-muted: #9a8a7a;        
+    --accent: #d48a5e;            
+    --accent-hover: #c0734a;      
+    --border-light: #f0e8e0;      
+    --shadow: rgba(40, 30, 20, 0.03); /* почти незаметная */
+    --banner-inner: #e5d5c4;
+    --banner-outer: #f8f0e8;
 }
 
 html, body {
     background-color: var(--bg-main);
     color: var(--text-primary);
     min-height: 100vh;
+}
+
+body {
+    padding-top: 57px;
 }
 
 .navbar.bg-light {
@@ -120,7 +126,6 @@ a:hover {
 .logout-btn {
     background: none;
     border: none;
-    padding: 0;
     cursor: pointer;
     color: var(--text-primary);
     font: inherit;
@@ -130,5 +135,74 @@ a:hover {
 
 .logout-btn:hover {
     color: var(--accent);
-    text-decoration: underline;
+}
+
+/* ===== САЙДБАРЫ ===== */
+.sidebar-block {
+    background: var(--banner-outer);
+    border-radius: 12px;
+    padding: 1rem;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ===== БАННЕР ===== */
+.banner-placeholder {
+    background: var(--banner-inner);
+    border-radius: 8px;
+    color: #7a5f4a;
+    font-size: 0.9rem;
+    flex: 1;
+    width: 100%;
+}
+
+.ads_banner {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.main-content {
+    background-color: var(--bg-main);
+    border-radius: 8px;
+    padding: 2rem;
+}
+
+.el-aside {
+    position: sticky;
+    top: 81px;
+    align-self: flex-start;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: calc(90vh - 100px);
+}
+
+.row-el {
+    align-items: flex-start;
+}
+
+.comment-trigger {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border: 1px solid #dee2e6;
+    border-radius: 0.50rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    transition: background-color 0.2s, color 0.2s;
+    cursor: pointer;
+}
+
+.comment-trigger:hover {
+    background-color: #ffffff;
+    color: #000000;         
+}
+
+.comment-trigger:hover .text-muted {
+    color: #000000 !important;
+}
+
+.poem-text {
+    text-indent: 1.5em;
 }
