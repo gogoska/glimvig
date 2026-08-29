@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.template.loader import render_to_string
 from django.http import HttpResponseNotAllowed, HttpResponseBadRequest, HttpResponse, Http404
 from django_htmx.http import HttpResponseClientRedirect
@@ -6,7 +6,9 @@ from django.urls import reverse
 from django.db.models import Count, OuterRef, Exists, Prefetch, Value, BooleanField, Subquery, IntegerField
 from django.contrib.auth import get_user_model
 from .models import Poem, FavoritePoem, Rating
-from .forms import RatingForm
+from .forms import RatingForm, PoemForm
+from django.conf import settings
+from django.core.mail import send_mail
 
 User = get_user_model()
 
@@ -160,11 +162,58 @@ def poem_detail(request, poem_slug):
 
     return render(request, 'poems/poem_detail.html', context)
 
+def poem_create(request):
+    if not request.user.is_authenticated:
+        return redirect('users:login')
+
+    # Сохранение данных в сэссии?
+
+    if request.method == 'GET':
+        poem_create_form = PoemForm()
+
+        context = {
+            'poem_create_form': poem_create_form,
+        }
+
+        return render(request, 'poems/poem_create.html', context)
+    elif request.method == 'POST':
+        poem_create_form = PoemForm(request.POST)
+
+        if poem_create_form.is_valid():
+            title = poem_create_form.cleaned_data['title']
+            teaser = poem_create_form.cleaned_data['teaser']
+            text = poem_create_form.cleaned_data['text']
+            postscript = request.POST.get('postscript', '')
+
+            subject = f'Поэма на проверку "{title}" (Отправитель: {request.user.username})'
+            message = f'''
+                Заголовок: {title}
+                Отрывок: {teaser}
+                Текст: {text}
+                P.s.: {postscript}
+                Автор: {request.user.username} ({request.user.email})
+            '''
+
+            try:
+                send_mail(subject, message, settings.EMAIL_HOST_USER, [settings.EMAIL_HOST_USER,])
+            except Exception as e:
+                return HttpResponseBadRequest(f'При отправке сообщения что-то пошло не так...')
+
+            return redirect('poems:home')
+        else:
+            postscript_value = postscript = request.POST.get('postscript', '')
+
+            context = {
+                'poem_create_form': poem_create_form,
+                'postscript_value': postscript_value,
+            }
+
+            return render(request, 'poems/poem_create.html', context)
+    else:
+        return HttpResponseNotAllowed(['GET', 'POST'])
+
 def about(request):
     return render(request, 'poems/about.html')
-
-def poem_create(request):
-    return render(request, 'poems/poem_create.html')
 
 def poem_edit(request):
     return render(request, 'poems/poem_edit.html')
