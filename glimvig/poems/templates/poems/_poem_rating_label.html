@@ -1,4 +1,4 @@
 <div id="rating-stats" hx-swap-oob="true">
-    <span class="text-dark py-2 fs-6">⭐  {% if poem.average_rating != 0 %} {{ poem.average_rating }} / 10 {% else %} - {% endif %}</span>
+    <span class="text-dark py-2 fs-6">⭐ {% if poem_average_rating != 0 %} {{ poem_average_rating }} / 10 {% else %} - {% endif %}</span>
     <span class="text-muted ms-2">(Оценок: {{ poem_votes_count|default:0 }})</span>
 </div>
