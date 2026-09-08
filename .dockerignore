@@ -5,6 +5,7 @@ __pycache__/
 venv/
 
 .env
+.env.prod
 
 .my_notes
 
@@ -13,5 +14,14 @@ staticfiles/
 
 media/*
 !media/.gitkeep
+
+.git
+.gitignore
+
+Dockerfile
+.dockerignore
+docker-compose.yml
+
+nginx.conf
 
 *.sql
