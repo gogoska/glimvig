@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 import os
+from . import local_settings
 from pathlib import Path
 from dotenv import load_dotenv
 load_dotenv()
@@ -26,10 +27,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = local_settings.DJANGO_DEBUG
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = local_settings.DJANGO_ALLOWED_HOSTS
 
 # Application definition
 
@@ -86,17 +86,13 @@ WSGI_APPLICATION = 'glimvig.wsgi.application'
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / 'db.sqlite3',
-    # }
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'glimvig_db',
-        'USER': 'glimvig_user',
-        'PASSWORD': os.getenv('POSTGRESQL_PASSWORD'),  
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'NAME': local_settings.POSTGRES_DB,
+        'USER': local_settings.POSTGRES_USER,
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),  
+        'HOST': local_settings.DJANGO_DB_HOST,
+        'PORT': local_settings.DJANGO_DB_PORT,
     }
 }
 
@@ -173,11 +169,11 @@ STATIC_CDN_RESOURCES = {
 SITE_NAME = 'Glimvig'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = os.getenv('TEST_MAIL_ADDRESS')
-EMAIL_HOST_PASSWORD = os.getenv('TEST_MAIL_PASSWORD')
+EMAIL_HOST = local_settings.EMAIL_HOST
+EMAIL_PORT = local_settings.EMAIL_PORT
+EMAIL_USE_TLS = local_settings.EMAIL_USE_TLS
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 
 ACCOUNT_ACTIVATION_DAYS = 1
 
